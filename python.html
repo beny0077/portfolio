@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Python Project Page - SA</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Header -->
+					<header id="header">
+						<a href="index.html" class="logo">Home</a>
+					</header>
+				<!-- Nav -->
+					<nav id="nav">
+						<ul class="links">
+							<li><a href="index.html">Home</a></li>
+						</ul>
+						<ul class="icons">
+							<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+							<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+							<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+							<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+						<!-- Post -->
+							<section class="post">
+								<header class="major">
+									<h1>Automating with Python<br />
+									</h1>
+								</header>
+									<h2>Python with Selenium</h2>
+									<p>Realizing that my job searches was becoming very repetative I sought out to find some way to autmate my job searching task. I found two useful tools to automate my task. One was Selenium to help me interact with a browser and the other was Scrapy, which is useful to download data from the broswer. However, to keep things simple I will just be showing the Selenium framework using Python</p>
+									<!--Techs Used-->
+									<hr />
+
+									<h3>Technologies used</h3>
+									<ul>
+										<li>Python 3.8.5</li>
+										<li>PyCharm Version: 2020.2.2</li>
+										<li>Crome WebDriver 85.0.4183.87</li>
+									  </ul>
+									  <hr />
+
+									  <h3>Automated Tasks</h3>
+									<ul>
+										<li>Visit the website</li>
+										<li>Search a job by its title</li>
+										<li>Select a radius</li>
+										<li>Handle the pop-up window</li>
+										<li>Select a distance for the job</li>
+										<li>Select an experience level</li>
+									  </ul>
+									  <hr />
+
+									<header>
+									<!--Getting started-->
+										<h3>Getting started</h3>
+										<p>Once I had my environment ready I installed Selenium with the following command: <pre><code>pip install selenium</code></pre></p>
+										<p>Then I installed the Chrome WebDriver for the automation from <a href="https://chromedriver.chromium.org/">Chromium </a> and imported the packages into my Python project that I would need for this project: <pre><code>from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time</code></pre></p>
+                                        <p>The imported packages will allow us to use the methods for the program to interact with the browser. Here is list of the methods we will be using:
+										<ul>
+											<li>webdriver.Chrome() - Visits the website</li>
+											<li>driver.find_element_by_xpath() - Locates an element</li>
+											<li>driver.find_element_by_id() - Locates an element</li>
+											<li>send_keys() - writes the input</li>
+											<li>click() - Mocks the click of a mouse</li>
+											<li>sleep() - Waits at a specified time before moving to another tasks</li>
+											<li>refresh() - Refreshes the current web page</li>
+											<li>clear() - Clears a text box</li>
+											<li>driver.close() - Closes the automation</li>
+										  </ul>
+										</p>
+									<!--Summary-->
+										<h3>Summary</h3>
+										<p>For the most part the whole process was simple but we don't live in a perfect world in I did find the pop-window to be the most challenging part to deal with. I used the Selenium WebDriver Switch method so the Webdriver would move to the pop-up window but nothing seemed to work. Since I wanted this project to be simple, I just use the refresh() method to handle the pop-up. Overall, I am happy with my Python project using Selenium and to be honest this is one of my favorite projects because it makes my life easier. In another project I will be using Scrapy to extract the data from the website and place it into an Excel or Google sheet.</p>
+									</header>
+									<hr />
+								<!-- Refactored Code -->
+									<h2>Python Code</h2>
+									<pre><code>
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+driver = webdriver.Chrome(executable_path = "C:\Drivers\chromedriver_win32\chromedriver")
+
+# open the website and wait one second before moving on to the next step
+driver.get('https://indeed.com/')
+time.sleep(1)
+
+# Look for the text box "What" text box to input job title and enter the title
+jobTitleSearchBox = driver.find_element_by_xpath('//*[@id="text-input-what"]')
+# enter job title
+jobTitleSearchBox.send_keys('software')
+
+# Now click on the "Find Jobs" tab and wait a couple of second so things load up nicely before our next step
+searchMyJobTitle = driver.find_element_by_xpath('//*[@id="whatWhereFormId"]/div[3]/button')
+searchMyJobTitle.click()
+time.sleep(2)
+
+# ***************************************************************
+# locate the dropdown element for distance and click it to display the options, wait a second before the next step
+dropdownRadiusList = driver.find_element_by_id('filter-distance')
+dropdownRadiusList.click()
+time.sleep(1)
+
+# Now locate the "within 50 miles" option by it's xpath, then wait 2 seconds before the next step
+selectFiftyMileRadius = driver.find_element_by_xpath('//*[@id="filter-distance-menu"]/li[6]/a')
+selectFiftyMileRadius.click()
+time.sleep(2)
+
+# at this point there will be a pop-up menu to to register your email, to deal with this, just refresh the page
+driver.refresh()
+# ***************************************************************
+
+# Also type in the location
+jobLocation = driver.find_element_by_xpath('//*[@id="where"]')
+jobLocation.clear()
+jobLocation.send_keys('Raleigh, NC')
+time.sleep(2)
+
+# Now click on the "Find Jobs" tab and wait a couple of second so things load up nicely before our next step
+ButtonSearchMyLocation = driver.find_element_by_xpath('//*[@id="fj"]')
+ButtonSearchMyLocation.click()
+time.sleep(2)
+
+# Locate the seniority tab and click it to expand the options
+seniorityDropDown = driver.find_element_by_id('filter-experience-level')
+seniorityDropDown.click()
+time.sleep(2)
+
+# Select the entry level option
+GiveMeEntryLevel = driver.find_element_by_xpath('//*[@id="filter-experience-level-menu"]/li[2]')
+GiveMeEntryLevel.click()
+time.sleep(15)
+
+driver.close()
+</code></pre>
+<a href="index.html" class="button large">Home</a>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
