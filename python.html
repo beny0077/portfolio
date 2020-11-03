@@ -36,8 +36,9 @@
 									<h1>Automating with Python<br />
 									</h1>
 								</header>
-									<h2>Python with Selenium</h2>
-									<p>Realizing that my job searches was becoming very repetative I sought out to find some way to autmate my job searching task. I found two useful tools to automate my task. One was Selenium to help me interact with a browser and the other was Scrapy, which is useful to download data from the broswer. However, to keep things simple I will just be showing the Selenium framework using Python</p>
+									<h2>Automating The Ordering Pizza Process</h2>
+									<p>Although I love pizza and I order it at least twice a week, this task sure gets tiresome when I have to repeat the same process every single time I order pizza. I have to visit Dominos, login, select a pizza from my profile, click continue, review my order, select an amount to donate to St. Jude Children’s Hospital, and submit the order. </p>
+									<p>Using Python and Selenium has made this task much easier by just running a script that will order my favorite pizza without me having to interact with the whole process of ordering.</p>
 									<!--Techs Used-->
 									<hr />
 
@@ -49,22 +50,27 @@
 									  </ul>
 									  <hr />
 
-									  <h3>Automated Tasks</h3>
+									  <h3>Process</h3>
+									  <a href="" class=""><img src="images/Process.PNG" alt="" /></a>
 									<ul>
-										<li>Visit the website</li>
-										<li>Search a job by its title</li>
-										<li>Select a radius</li>
-										<li>Handle the pop-up window</li>
-										<li>Select a distance for the job</li>
-										<li>Select an experience level</li>
+										<li>Visit Dominos</li>
+										<li>Enter credentials</li>
+										<li>Click the sign in button</li>
+										<li>Click on “Pizza Profile”</li>
+										<li>Click on “Reorder Now”</li>
+										<li>Click the continue Button on the pop-up window</li>
+										<li>Click the continue to checkout button</li>
+										<li>Click Yes, Add to Order $1 to St. Jude Children’s Research pop-up window</li>
+										<li>Place order</li>
+										<li>Close session</li>
 									  </ul>
 									  <hr />
 
 									<header>
 									<!--Getting started-->
-										<h3>Getting started</h3>
-										<p>Once I had my environment ready I installed Selenium with the following command: <pre><code>pip install selenium</code></pre></p>
-										<p>Then I installed the Chrome WebDriver for the automation from <a href="https://chromedriver.chromium.org/">Chromium </a> and imported the packages into my Python project that I would need for this project: <pre><code>from selenium import webdriver
+										<h3>Requirements</h3>
+										<p>Setup a Python environment to install Selenium with the following command: <pre><code>pip install selenium</code></pre></p>
+										<p>Install the Chrome WebDriver for automation from <a href="https://chromedriver.chromium.org/">Chromium </a> and import the packages into the Python project: <pre><code>from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time</code></pre></p>
                                         <p>The imported packages will allow us to use the methods for the program to interact with the browser. Here is list of the methods we will be using:
@@ -80,72 +86,85 @@ import time</code></pre></p>
 											<li>driver.close() - Closes the automation</li>
 										  </ul>
 										</p>
-									<!--Summary-->
-										<h3>Summary</h3>
-										<p>For the most part the whole process was simple but we don't live in a perfect world in I did find the pop-window to be the most challenging part to deal with. I used the Selenium WebDriver Switch method so the Webdriver would move to the pop-up window but nothing seemed to work. Since I wanted this project to be simple, I just use the refresh() method to handle the pop-up. Overall, I am happy with my Python project using Selenium and to be honest this is one of my favorite projects because it makes my life easier. In another project I will be using Scrapy to extract the data from the website and place it into an Excel or Google sheet.</p>
+									
 									</header>
 									<hr />
 								<!-- Refactored Code -->
-									<h2>Python Code</h2>
+									<h2>Steps</h2>
 									<pre><code>
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-driver = webdriver.Chrome(executable_path = "C:\Drivers\chromedriver_win32\chromedriver")
+driver = webdriver.Chrome(executable_path= "C:\Drivers\chromedriver_win32\chromedriver")
+driver.get('https://www.dominos.com/')
+time.sleep(3)
 
-# open the website and wait one second before moving on to the next step
-driver.get('https://indeed.com/')
-time.sleep(1)
-
-# Look for the text box "What" text box to input job title and enter the title
-jobTitleSearchBox = driver.find_element_by_xpath('//*[@id="text-input-what"]')
-# enter job title
-jobTitleSearchBox.send_keys('software')
-
-# Now click on the "Find Jobs" tab and wait a couple of second so things load up nicely before our next step
-searchMyJobTitle = driver.find_element_by_xpath('//*[@id="whatWhereFormId"]/div[3]/button')
-searchMyJobTitle.click()
-time.sleep(2)
-
-# ***************************************************************
-# locate the dropdown element for distance and click it to display the options, wait a second before the next step
-dropdownRadiusList = driver.find_element_by_id('filter-distance')
-dropdownRadiusList.click()
-time.sleep(1)
-
-# Now locate the "within 50 miles" option by it's xpath, then wait 2 seconds before the next step
-selectFiftyMileRadius = driver.find_element_by_xpath('//*[@id="filter-distance-menu"]/li[6]/a')
-selectFiftyMileRadius.click()
-time.sleep(2)
-
-# at this point there will be a pop-up menu to to register your email, to deal with this, just refresh the page
+# Refresh site to handle the pop up
 driver.refresh()
-# ***************************************************************
+time.sleep(3)
 
-# Also type in the location
-jobLocation = driver.find_element_by_xpath('//*[@id="where"]')
-jobLocation.clear()
-jobLocation.send_keys('Raleigh, NC')
-time.sleep(2)
+# Click the sign in button
+signInBtn = driver.find_element_by_xpath('//*[@id="_dpz"]/header/nav[1]/div[1]/div[3]/span/a')
+signInBtn.click()
+time.sleep(3)
+###################### Enter Credentials ###########################
+# Enter email
+jobLocation = driver.find_element_by_xpath('//*[@id="Email"]')
+jobLocation.send_keys('email')
 
-# Now click on the "Find Jobs" tab and wait a couple of second so things load up nicely before our next step
-ButtonSearchMyLocation = driver.find_element_by_xpath('//*[@id="fj"]')
-ButtonSearchMyLocation.click()
-time.sleep(2)
+# enter password
+psw = driver.find_element_by_xpath('//*[@id="Password"]')
+psw.send_keys('password')
+time.sleep(1)
+####################################################################
 
-# Locate the seniority tab and click it to expand the options
-seniorityDropDown = driver.find_element_by_id('filter-experience-level')
-seniorityDropDown.click()
-time.sleep(2)
+# Login
+loginBtn = driver.find_element_by_xpath('//*[@id="pizzaProfileLoginOverlay"]/form/div[3]/div/div[1]/div[2]/div[1]/div[1]/button/span')
+loginBtn.click()
+time.sleep(3)
 
-# Select the entry level option
-GiveMeEntryLevel = driver.find_element_by_xpath('//*[@id="filter-experience-level-menu"]/li[2]')
-GiveMeEntryLevel.click()
-time.sleep(15)
+# Navigate through the banner before clicking the pizza profile button
+findBannerArielClassNav_Inner = driver.find_element_by_xpath('//*[@id="_dpz"]/header/nav[1]/div[1]/ul')
+# Once we have arrived at the element 'a' from the dropdown list, click the button
+pizzaProfileBtn = driver.find_element_by_xpath('//*[@id="_dpz"]/header/nav[1]/div[1]/ul/li[7]/a')
+pizzaProfileBtn.click()
+time.sleep(8)
+
+# Assuming we have a pizza profile, click the reorder button
+reorderBtn = driver.find_element_by_xpath('//*[@id="js-customerPage"]/div/section[3]/div/section/div/div[1]/div[1]/a')
+reorderBtn.click()
+time.sleep(7)
+
+# click continue on the pop up window
+continueToSelectionBtn = driver.find_element_by_xpath('//*[@id="genericOverlay"]/section/div/div/a[2]')
+continueToSelectionBtn.click()
+time.sleep(6)
+
+# find the Continue to Checkout button
+findCheckoutClass = driver.find_element_by_xpath('//*[@id="_dpz"]')
+# click the Checkout button
+checkoutBtn = driver.find_element_by_xpath('//*[@id="js-checkoutColumns"]/aside/div[3]/div[1]/a')
+time.sleep(3)
+checkoutBtn.click()
+time.sleep(6)
+
+# Donate $1 to St. Jude Children's Hospital in the pop up window
+submitDonationBtn = driver.find_element_by_xpath('//*[@id="genericOverlay"]/section/div/div/div[2]/div/div[4]/a[1]')
+submitDonationBtn.click()
+
+# Place order
+placeOrderBtn = driver.find_element_by_xpath('//*[@id="orderPaymentPage"]/form/div[5]/div/div/div[4]/button')
+placeOrderBtn.click()
 
 driver.close()
 </code></pre>
+<!--Summary-->
+<h3>Summary</h3>
+<p>This task was very simple to automate but were some challenges. When copying an XML path and clicking a button, it would not work sometimes. This is because I had to navigate the web driver until it arrived at the proper element. For example, the Sign In button, I needed to find the dropdown menu by its id-->find the list-->and find the item to click.</p>
+<a href="" class=""><img src="images/SignIn.PNG" alt="" /></a>
+<p>Also, after running the script about 10 times in a row, sometimes a pop-up window would appear as soon as the Webdriver accessed the Dominos website. To handle the random pop-up window, I just refreshed the website.</p>
+<p>Overall, this project was fun! Automating my pizza order has really opened my eyes on how useful automation can be to just about any industry, not just to help them order pizza but to also automate repetitive tasks in an organization that will help them be more efficient and productive.</p>
 <a href="index.html" class="button large">Home</a>
 
 		<!-- Scripts -->
