@@ -51,7 +51,7 @@
 									  <hr />
 
 									  <h3>Process</h3>
-									  <a href="" class=""><img src="images/Process.PNG" alt="" /></a>
+									  <a class="image fit"><img src="images/Process.PNG" alt="" /></a>					
 									<ul>
 										<li>Visit Dominos</li>
 										<li>Enter credentials</li>
@@ -161,10 +161,10 @@ driver.close()
 </code></pre>
 <!--Summary-->
 <h3>Summary</h3>
-<p>This task was very simple to automate but were some challenges. When copying an XML path and clicking a button, it would not work sometimes. This is because I had to navigate the web driver until it arrived at the proper element. For example, the Sign In button, I needed to find the dropdown menu by its id-->find the list-->and find the item to click.</p>
-<a href="" class=""><img src="images/SignIn.PNG" alt="" /></a>
-<p>Also, after running the script about 10 times in a row, sometimes a pop-up window would appear as soon as the Webdriver accessed the Dominos website. To handle the random pop-up window, I just refreshed the website.</p>
-<p>Overall, this project was fun! Automating my pizza order has really opened my eyes on how useful automation can be to just about any industry, not just to help them order pizza but to also automate repetitive tasks in an organization that will help them be more efficient and productive.</p>
+<p>This task was very simple to automate but there were challenges. When copying the XML path and clicking the Sign In button, it would not work. To fix thig, I had to navigate or give the path to the web driver until it arrived at the proper element that needed to be clicked. For example, the Sign In button, I needed to find the dropdown menu by its id-->find the list-->and find the item to click.</p>
+<a class="image fit"><img src="images/SignIn.PNG" alt="" /></a>
+<p>Another challenge was that sometimes (about 1 out of 10) a pop-up window would appear initially after entering the site. To handle the random pop-up window, I used the refresh() method to clear it out.</p>
+<p>Overall, this project was fun! Automating my pizza order has really opened my eyes to see and understand how useful automation can be to just about any industry, not just to help them order pizza but to also help them save manual business processes by automating repetitive tasks in their organization that will help them be more efficient and productive.</p>
 <a href="index.html" class="button large">Home</a>
 
 		<!-- Scripts -->
